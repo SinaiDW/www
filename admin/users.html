@@ -1,0 +1,34 @@
+	<script type="text/javascript" charset="utf-8" src="/admin/js/table.users.js"></script>
+	<div class="dataTables">
+		<div class="container">
+
+			<h3>
+				Users
+			</h3>
+			
+			<table cellpadding="0" cellspacing="0" border="0" class="display" id="users" width="100%">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Status</th>
+						<th>Employee ID</th>
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>
+					</tr>
+				</thead>
+			</table>
+
+		</div>
+	</div>
+
+	<script>
+	
+	function resetPassword(id) {
+		loadPage('db/resetPassword.php?id=' +  id.replace('row_', ''));
+	}
+	
+	function setGroups(id) {
+		loadPage('db/setGroupsForUser.php?id=' +  id.replace('row_', ''));
+	}
+	
+	</script>

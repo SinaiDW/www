@@ -1,0 +1,38 @@
+	<div class="col-xs-12">        
+        <h4 class="title">Log in (Using your network credentials)</h4>
+      </div>
+      <div class="body">
+		<form>
+			<div class="form-group">
+				<label for="usernameInput">Username:</label>
+				<input type="text" class="form-control" model="login" name="username" id="usernameInput" placeholder="Username">
+			</div>
+			<div class="form-group">
+				<label for="passwordInput">Password</label>
+				<input type="password" class="form-control" model="login"  name="password"  autocomplete="off"  id="passwordInput" placeholder="Password">
+			</div>
+			<div class="form-group">
+				<label for="networkInput">Network</label>
+				<select class="form-control" id="networkInput" model="login"  name="network">
+					<option value="local">local</option>
+					<option value="mssm">mssm.edu</option>
+                    <option value="MSH">mountsinai.org</option>
+                    <option value="bislw">chpnet.org</option>
+                    <option value="nyee">nyee.edu</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="rememberInput">Remember me</label>
+				<select class="form-control" id="rememberInput" model="login"  name="remember">
+					<option value="off">Off</option>
+					<option value="on">On</option>
+				</select>
+			</div>
+		
+		
+      </div>
+      <div class="modal-footer">
+			<button type="button" class="btn btn-primary" onclick="loginSubmit()">Log in</button>
+      </div>
+	  </form>        
+    </div>

@@ -1,0 +1,50 @@
+.projectBox {
+	min-height: 200px;
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-top: 2px;
+	margin-bottom: 7px;
+	border: 1px solid #86d0f4;
+}
+
+.siteBox {
+	min-height: 200px;
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-top: 2px;
+	margin-bottom: 7px;
+	border: 1px solid #a0a0a0;
+	background-color: #F4B3E0;
+}
+
+.siteBox h4 {
+	text-align: center;	
+}
+
+
+.projectBox h4 {
+	text-align: center;	
+}
+
+.clickable {
+	cursor: pointer;
+}
+
+.description {
+	color: #a0a0a0; 
+}
+
+#logo {
+	width:  74;
+	height: 25;
+}
+
+.navbar-toggle {
+	color: #00aeef;
+	border: 1px solid #00aeef;
+}
+
+#spanNameId {
+	font-size: 14pt;
+	font-weight: bold;
+}

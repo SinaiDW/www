@@ -1,0 +1,116 @@
+<html>
+<header>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<script type="text/javascript" charset="utf-8" src="/DataTables/datatables.min.js"></script>  
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script src="js/index.js"></script>
+
+<link rel="stylesheet" type="text/css" href="/DataTables/datatables.min.css">
+<link rel="stylesheet" type="text/css" href="/css/generator-base.css">
+<link rel="stylesheet" type="text/css" href="/css/editor.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="/css/dw.css">
+<script type="text/javascript" charset="utf-8" src="/js/dataTables.editor.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/dwAdmin.js"></script>
+
+
+<style>
+.jumbotron {
+	padding-left:30px;
+	height: 50px;
+	padding-top:10px;
+	text-size: 16pt;
+	background-color: #00aeef;
+	color: white;
+}
+
+  
+</style>
+
+</header>
+<body>
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+		<input type="hidden" id="currentModel">
+		<input type="hidden" id="currentID">
+        <button type="button" class="close" data-dismiss="modal" id="closeModalIcon">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+        
+      </div>
+      <div class="modal-footer">
+		<button type="button" class="btn btn-primary" data-dismiss="modal" id="modalSaveButton" onclick="saveModalModel()">
+		 <i class="fa fa-check"></i> Save</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+		 <i class="fa fa-times"></i> Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<nav class="navbar navbar-light bg-faded navbar-static-top" role="navigation">
+	<a class="navbar-brand" href="http://www.mountsinai.org"><img src="/img/logo-color.png" id="logo" title="Mount Sinai"></a>
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <i class="fa fa-bars"></i>
+				
+            </button>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+				<li><a href="#" onclick="showProjects()"><i class="fa fa-home" title="Home"></i> Home</a></li>
+				<li><a href="#" onclick="loadPage('mySites.php')"><i class="fa fa-sitemap" title="Sites"></i> Sites</a></li>
+				<li><a href="#" onclick="loadPage('admin/index.html')"><i class="fa fa-gear" title="Admin"></i> Admin</a></li>
+                <li><a href="#" onclick="loadPage('login.html')">log in</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="jumbotron">Reporting server: v. 0.1 <i class="fa fa-copyright"></i> 2017:  <span id="spanNameId"></span></div>
+
+<div class="container-fluid" id="main">
+</div>
+
+
+</body>
+
+<script>
+
+
+$(document).ready(function() {
+	$('#loginSuccessMessage').hide();
+	$('#loginErrorMessage').hide();
+	if(getCookie('remember') == 'on' ) {
+		$('#usernameInput').val(getCookie('username'));
+		$('#networkInput').val(getCookie('network'));
+		$('#rememberInput').val(getCookie('remember'));
+	}
+	showProjects();
+	
+	convertLinks();
+});
+
+</script>
+
+</html>
