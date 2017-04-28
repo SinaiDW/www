@@ -13,7 +13,7 @@ $(document).ready(function() {
 		fields: [
 			{
 				"label": "Name",
-				"name": "name",
+				"name": "name"
 			},
 			{
 				"label": "Status:",
@@ -23,7 +23,11 @@ $(document).ready(function() {
 			},
 			{
 				"label": "Employee ID",
-				"name": "employee_id",
+				"name": "employee_id"
+			},
+			{
+				"label": "e-mail",
+				"name": "email"
 			}			
 		]
 	} );
@@ -41,6 +45,9 @@ $(document).ready(function() {
 			{
 				"data": "employee_id"
 			},
+{
+				"data": "email"
+			},			
 			{
 				'data' : null,
 				'orderable' : false,

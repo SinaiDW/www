@@ -1,13 +1,14 @@
 		<div class="col-sm-12">
 			<h1><i class="fa fa-gear"></i> Admin</h1>
 			<ul>
-				<li><a href="#&admin/sites.html">Sites</a></li>
-				<li><a href="#&admin/db_connectors.html">Database Connectors</a></li>
-				<li><a href="#&admin/projects.html">Projects</a></li>
-				<li><a href="#&admin/workbooks.html">Workbooks</a></li>
-				<li><a href="#&admin/users.html">Local users</a></li>
-				<li><a href="#&admin/user_groups.html">User groups</a></li>
-				<li><a href="#&admin/privileges.html">Privileges</a></li>
+				<li class="clickable" onclick="loadPage('admin/sites.html', null, { requireSession: true })">Sites</li>
+				<li class="clickable" onclick="loadPage('admin/db_connectors.html', null, { requireSession: true })">Database Connectors</li>
+				<li class="clickable" onclick="loadPage('admin/db_sources.html', null, { requireSession: true })">Data Sources</li>
+				<li class="clickable" onclick="loadPage('admin/projects.html', null, { requireSession: true })">Projects</li>
+				<li class="clickable" onclick="loadPage('admin/workbooks.html', null, { requireSession: true })">Workbooks</li>
+				<li class="clickable" onclick="loadPage('admin/users.html', null, { requireSession: true })">Local users</li>
+				<li class="clickable" onclick="loadPage('admin/user_groups.html', null, { requireSession: true })">User groups</li>
+				<li class="clickable" onclick="loadPage('admin/privileges.html', null, { requireSession: true })">Privileges</li>
 			</ul>
 			<ul>
 				<li><a href="applications.html" target="apps">Applications</a></li>

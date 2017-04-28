@@ -18,9 +18,6 @@ use
 	DataTables\Editor\Upload,
 	DataTables\Editor\Validate;
 
-// The following statement can be removed after the first run (i.e. the database
-// table has been created). It is a good idea to do this to help improve
-// performance.
 
 // Build our Editor instance and process the data coming from _POST
 Editor::inst( $db, 'user_groups', 'id' )
@@ -30,6 +27,7 @@ Editor::inst( $db, 'user_groups', 'id' )
 		Field::inst( 'user_groups.name' ),
 		Field::inst( 'user_groups.description' )
 	)
+	->where('site_id', getClientSiteId())
 	->leftJoin('sites', 'sites.id', '=', 'user_groups.site_id')
 	->process( $_POST )
 	->json();

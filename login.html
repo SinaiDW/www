@@ -9,7 +9,7 @@
 			</div>
 			<div class="form-group">
 				<label for="passwordInput">Password</label>
-				<input type="password" class="form-control" model="login"  name="password"  autocomplete="off"  id="passwordInput" placeholder="Password">
+				<input type="password" class="form-control" model="login"  name="password" autocomplete="off"  id="passwordInput" placeholder="Password">
 			</div>
 			<div class="form-group">
 				<label for="networkInput">Network</label>
@@ -36,3 +36,13 @@
       </div>
 	  </form>        
     </div>
+<script>
+	
+$('#passwordInput').keypress(function(e) {
+    if (e.which == '13') {
+        loginSubmit();
+		e.preventDefault();
+    }
+});
+
+</script>

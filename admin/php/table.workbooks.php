@@ -21,13 +21,6 @@ use
 // The following statement can be removed after the first run (i.e. the database
 // table has been created). It is a good idea to do this to help improve
 // performance.
-$db->sql( "CREATE TABLE IF NOT EXISTS `workbooks` (
-	`id` int(10) NOT NULL auto_increment,
-	`project_id` varchar(255),
-	`name` varchar(255),
-	PRIMARY KEY( `id` )
-);" );
-
 // Build our Editor instance and process the data coming from _POST
 Editor::inst( $db, 'workbooks', 'id' )
 	->fields(
@@ -36,5 +29,6 @@ Editor::inst( $db, 'workbooks', 'id' )
 		Field::inst( 'projects.name' )
 	)
 	->leftJoin('projects', 'projects.id', '=', 'workbooks.project_id')
+	->where('projects.site_id', getClientSiteId())
 	->process( $_POST )
 	->json();

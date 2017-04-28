@@ -23,7 +23,8 @@ Editor::inst( $db, 'users', 'id' )
 	->fields(
 		Field::inst( 'name' ),
 		Field::inst( 'status' ),
-		Field::inst( 'employee_id' )
+		Field::inst( 'employee_id' ),
+		Field::inst( 'email' )
 	)
 	->process( $_POST )
 	->json();

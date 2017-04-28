@@ -1,11 +1,19 @@
 <?php
 
-include("read_db_pwd.php");
-$pwd = getRootPWD($s);
+$conf = parse_ini_file('c:\Bitnami\wampstack-5.6.30-1\apache2\config.ini');
+// echo json_encode($conf);
 
-$db = new PDO('mysql:host=localhost;dbname=dw_admin;charset=utf8', 'root', $pwd);
+$db = new PDO('mysql:host=' . $conf['mysqlHost'] . ';dbname=' . $conf['mysqlDB'] . 
+';charset=' . $conf['mysqlCharset'], $conf['mysqlUser'], $conf['mysqlPwd']);
+
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+
+function getClientSiteId() {
+	if(isset($_COOKIE) && isset($_COOKIE['siteId'])) return $_COOKIE['siteId']; 
+	else 
+		return -1;
+}
 
 function sql($p) {
 	global $db;
@@ -28,6 +36,7 @@ function sql($p) {
 		}
 	} 
 };
+
 
 function createExcel() {
 	

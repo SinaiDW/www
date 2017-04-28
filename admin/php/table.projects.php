@@ -18,15 +18,6 @@ use
 	DataTables\Editor\Upload,
 	DataTables\Editor\Validate;
 
-// The following statement can be removed after the first run (i.e. the database
-// table has been created). It is a good idea to do this to help improve
-// performance.
-$db->sql( "CREATE TABLE IF NOT EXISTS `projects` (
-	`id` int(10) NOT NULL auto_increment,
-	`name` varchar(255),
-	`description` text,
-	PRIMARY KEY( `id` )
-);" );
 
 // Build our Editor instance and process the data coming from _POST
 Editor::inst( $db, 'projects', 'id' )
@@ -37,5 +28,6 @@ Editor::inst( $db, 'projects', 'id' )
 		Field::inst( 'projects.description' )
 	)
 	->leftJoin('sites', 'sites.id', '=', 'projects.site_id')
+	->where('site_id', getClientSiteId())
 	->process( $_POST )
 	->json();

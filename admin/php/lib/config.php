@@ -1,8 +1,6 @@
 <?php if (!defined('DATATABLES')) exit(); // Ensure being used in DataTables env.
 
-include ("../../db/read_db_pwd.php");
-
-$pwd = getRootPWD($s);
+include_once ("../../db/db.php");
 
 
 /*
@@ -19,10 +17,10 @@ ini_set('display_errors', '1');
  */
 $sql_details = array(
 	"type" => "Mysql",
-	"user" => "root",
-	"pass" => $pwd,
-	"host" => "",
+	"user" => $conf['mysqlUser'],
+	"pass" => $conf['mysqlPwd'],
+	"host" => $conf['mysqlHost'],
 	"port" => "",
-	"db"   => "dw_admin",
-	"dsn"  => "charset=utf8"
+	"db"   => $conf['mysqlDB'],
+	"dsn"  => "charset=". $conf['mysqlCharset']
 );
