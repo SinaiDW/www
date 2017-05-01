@@ -8,7 +8,7 @@
 
 $(document).ready(function() {
 	var editor = new $.fn.dataTable.Editor( {
-		ajax: 'php/table.db_sources.php',
+		ajax: 'admin/php/table.db_sources.php',
 		table: '#db_sources',
 		fields: [
 			{
@@ -30,7 +30,7 @@ $(document).ready(function() {
 
 	var table = $('#db_sources').DataTable( {
 		dom: 'Bfrtip',
-		ajax: 'php/table.db_sources.php',
+		ajax: 'admin/php/table.db_sources.php',
 		columns: [
 			{
 				"data": "db_connector_id"
