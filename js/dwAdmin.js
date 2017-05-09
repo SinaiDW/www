@@ -1,4 +1,3 @@
-
 function parseJSONToOptions(json, field) {
 	var out = [];
 	var parts = field.split('.');
@@ -142,6 +141,48 @@ function setSite(id, name) {
 	loadPage('/showProjects.php?siteId='+id);
 }
 
+function setLoginButton(hasSession) {
+	if(hasSession) {
+		$('#loginLink').text('Log out');
+	} else {
+		$('#loginLink').text('Log in');
+	}
+}
+
+function checkSession() {
+	if(getCookie('sessionKey')) {
+		$.ajax({
+			'url' : 'db/checkSession.php',
+			'type' : 'GET',
+			'dataType' : 'json'
+		}).success(function(json) {
+			if(json.result == 'OK') {
+				if(json.data['hasSession']) {
+					setLoginButton(true);
+				} else {
+					message("Your session has expired.");
+					setLoginButton(false);
+				}
+			} else {
+				errorMSG(json.error);
+			}
+		});
+	} else {
+		setLoginButton(false);
+	}
+	setTimeout(function() { checkSession(); }, 600000); // every 10 minutes
+}
+
+function login() {
+	if(getCookie('sessionKey')) {
+		setCookie('sessionKey', '');
+		setLoginButton(false);
+		loadPage("loggedOut.html");
+	} else {
+		loadPage("login.html");
+	}
+}
+
 function loginSubmit() {
 	var data = getInputValues('login');
 	if(! data.network) {
@@ -161,7 +202,11 @@ function loginSubmit() {
 	}).success(function(json) {
 		if(json.result == 'OK') {
 			message(json.message);
-			if(json.sessionKey) setCookie('sessionKey', json.sessionKey);
+			if(json.sessionKey) {
+				setCookie('sessionKey', json.sessionKey);
+				setCookie('userid', json.userid);
+				setLoginButton(true);
+			}
 			if(data.remember) {
 				setCookie('username', data.username);
 				setCookie('remember', data.remember);

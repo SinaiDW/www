@@ -7,7 +7,7 @@ if(isset($_GET) && isset($_GET["siteId"])) {
 } else if(isset($_COOKIE) && isset($_COOKIE['siteId'])) {
 	$siteId = $_COOKIE["siteId"];
 } else {
-	echo '<div class="col-xs-12"><p>Error:  No site selected</p> <p>Please select a site from the top menu</p></div>';
+    loadPage('nosite.html');
 	die;
 }
 

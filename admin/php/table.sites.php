@@ -6,9 +6,21 @@
  */
 
 // DataTables PHP library and database connection
-include( "lib/DataTables.php" );
+include_once("../../db/db.php");
+
+if(hasValidSession()) {
+	if(! isMemberOf(getSiteId('System'), getCurrentUserId(), 'Admin')){
+		echo errorMSG("No access.");
+		die();
+	} 
+} else {
+	echo errorMSG("No valid session");
+	die();
+}
+
 
 // Alias Editor classes so they are easy to use
+include( "lib/DataTables.php" );
 use
 	DataTables\Editor,
 	DataTables\Editor\Field,
@@ -21,11 +33,6 @@ use
 // The following statement can be removed after the first run (i.e. the database
 // table has been created). It is a good idea to do this to help improve
 // performance.
-$db->sql( "CREATE TABLE IF NOT EXISTS `sites` (
-	`id` int(10) NOT NULL auto_increment,
-	`name` varchar(255),
-	PRIMARY KEY( `id` )
-);" );
 
 // Build our Editor instance and process the data coming from _POST
 Editor::inst( $db, 'sites', 'id' )
