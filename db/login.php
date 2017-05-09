@@ -52,7 +52,11 @@ if( $network == 'local' ) {
 	]);
 	if(! is_null($res)  && $res['password'] == md5($_POST['password'])) {
 		
-		echo json_encode([ 'result' => 'OK', 'message' => 'Login OK', 'sessionKey' => createSession($res['user_id']) ]);
+		echo json_encode([ 
+			'result' => 'OK', 
+			'message' => 'Login OK', 
+			'sessionKey' => createSession($res['user_id']),
+			'userid' => $res['user_id'] ]);
 	} else {
 		echo json_encode([ 'result' => 'error', 'error' => 'Username or password incorrect']);
 	}

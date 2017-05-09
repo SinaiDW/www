@@ -15,6 +15,7 @@ function getClientSiteId() {
 		return -1;
 }
 
+
 function sql($p) {
 	global $db;
 //	echo $p['query'] ."\n";
@@ -36,6 +37,47 @@ function sql($p) {
 		}
 	} 
 };
+
+function getSiteId($name) {
+	$res = sql(
+		[	"query" => "select id from sites where name = :name", 
+			"params" => [				
+				[ 	"name" => "name",
+					"val" => $name,
+					"type" => PDO::PARAM_STR
+				]
+			],
+			"data" => "single"
+		]
+	);
+	if(isset($res['id'])) return $res['id'];
+	return null;	
+}
+
+function isMemberOf($siteId, $userId, $name) {
+	$res = sql(
+		[	"query" => "select 'x' as cnt from user_groups g join group_members m on m.group_id = g.id " .
+				" where m.user_id = :userid and g.site_id = :siteid and g.name = :name", 
+			"params" => [
+				[ 	"name" => ":siteid",
+					"val" => $siteId,
+					"type" => PDO::PARAM_INT
+				],
+				[ 	"name" => ":userid",
+					"val" => $userId,
+					"type" => PDO::PARAM_INT
+				],
+				[ 	"name" => ":name",
+					"val" => $name,
+					"type" => PDO::PARAM_STR
+				]
+			],
+			"data" => "single"
+		]
+	);
+	if(isset($res['cnt'])) return true;
+	return false;
+}
 
 
 function createExcel() {
@@ -139,13 +181,18 @@ function hello() {}
 function getSession($params)  {
 	if($params['sessionKey']) {
 		$res = sql([
-			"query" => "select s.user_id, s.session_start, s.status, u.name, u.status as user_status from sessions s " .
-				"join users u on s.user_id = u.id where s.session_key = :sessionKey",
+			"query" => "select s.user_id, s.session_start, s.status, u.name, u.status as user_status ".
+				" from sessions s " .
+				"join users u on s.user_id = u.id where s.session_key = :sessionKey and s.user_id = :userid ",
 			"params" => [
 				[ 	"name" => ":sessionKey",
 					"val" => $params['sessionKey'],
 					"type" => PDO::PARAM_STR
-				]
+				],
+				[ 	"name" => ":userid",
+					"val" => $params['userid'],
+					"type" => PDO::PARAM_INT
+				]				
 			],
 			"data" => "single"
 		]);
@@ -153,14 +200,34 @@ function getSession($params)  {
 			return $res;
 		}
 	}
+	return null;
+}
+
+function loadPage($page) {
+	echo "<script> $(document).ready(function() {loadPage('" . $page . "'); }); </script>";
 }
 
 function hasValidSession() {
-	
+	if(isset($_COOKIE) && isset($_COOKIE['sessionKey'])) {
+		$result = getSession([ 
+			'sessionKey' => $_COOKIE['sessionKey'], 
+			'userid' => $_COOKIE['userid']
+		]);
+		if(isset($result)) return true;
+	} 
+	return false;
 }
 
 function jsonError($error) {
 	echo json_encode([ "result" => "error", "error" => $error]);
+}
+
+function errorMSG($msg) {
+	echo json_encode([ "result" => "error", "error" => $msg ]);
+}
+
+function getCurrentUserId() {
+	return $_COOKIE['userid'];
 }
 
 ?>

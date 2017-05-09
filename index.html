@@ -85,7 +85,7 @@
 				<li><a href="#" onclick="showProjects()"><i class="fa fa-home" title="Home"></i> Home</a></li>
 				<li><a href="#" onclick="loadPage('mySites.php')"><i class="fa fa-sitemap" title="Sites"></i> Sites</a></li>
 				<li><a href="#" onclick="loadPage('admin/index.html', null, { requireSession: true })"><i class="fa fa-gear" title="Admin"></i> Admin</a></li>
-                <li><a href="#" onclick="loadPage('login.html')">log in</a></li>
+                <li><a id="loginLink" href="#" onclick="login()">log in</a></li>
             </ul>
         </div>
     </div>
@@ -114,6 +114,7 @@ $(document).ready(function() {
 	showProjects();
 	
 	convertLinks();
+	checkSession();
 });
 
 </script>
