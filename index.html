@@ -20,7 +20,7 @@
 <script src="js/index.js"></script>
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="/css/dw.css">
+
 
 
 <link rel="stylesheet" type="text/css" href="/DataTables/datatables.min.css">
@@ -28,7 +28,7 @@
 <link rel="stylesheet" type="text/css" href="/css/editor.dataTables.min.css">
 <script type="text/javascript" charset="utf-8" src="/js/dataTables.editor.min.js"></script>
 <script type="text/javascript" charset="utf-8" src="/js/dwAdmin.js"></script>
-
+<link rel="stylesheet" type="text/css" href="/css/dw.css">
 
 <style>
 .jumbotron {
@@ -85,13 +85,14 @@
 				<li><a href="#" onclick="showProjects()"><i class="fa fa-home" title="Home"></i> Home</a></li>
 				<li><a href="#" onclick="loadPage('mySites.php')"><i class="fa fa-sitemap" title="Sites"></i> Sites</a></li>
 				<li><a href="#" onclick="loadPage('admin/index.html', null, { requireSession: true })"><i class="fa fa-gear" title="Admin"></i> Admin</a></li>
-                <li><a href="#" onclick="loadPage('login.html')">log in</a></li>
+                <li><a id="loginLink" href="#" onclick="login()">log in</a></li>
             </ul>
         </div>
     </div>
 </nav>
 
-<div class="jumbotron">Reporting server: v. 0.1 <i class="fa fa-copyright"></i> 2017:  <span id="spanNameId"></span></div>
+<div class="jumbotron">Reporting server: v. 0.1 <i class="fa fa-copyright"></i> 2017:  
+<span class="clickable" onclick="loadPage('showProjects.php')"><i class="fa fa-th-list"></i> <span id="spanNameId"></span></span></div>
 
 <div class="container-fluid" id="main">
 </div>
@@ -113,6 +114,7 @@ $(document).ready(function() {
 	showProjects();
 	
 	convertLinks();
+	checkSession();
 });
 
 </script>
