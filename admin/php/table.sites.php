@@ -10,11 +10,11 @@ include_once("../../db/db.php");
 
 if(hasValidSession()) {
 	if(! isMemberOf(getSiteId('System'), getCurrentUserId(), 'Admin')){
-		echo errorMSG("No access.");
+		echo errorMSG("No access.", [ "data" => [] ]);
 		die();
 	} 
 } else {
-	echo errorMSG("No valid session");
+	echo errorMSG("No valid session", [ "data" => [] ]);
 	die();
 }
 

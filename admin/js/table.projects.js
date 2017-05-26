@@ -33,7 +33,15 @@ $(document).ready(function() {
 		]
 	} );
 
-	var table = $('#projects').DataTable( {
+	$.fn.dataTable.ext.errMode = 'none';
+	
+	var table = $('#projects')
+		.on('error.dt', function(e, settings, techNote, message) {
+			var msg = message.split('-')[1];
+			errorMSG(msg);
+			setPage(msg);
+		})
+		.DataTable( {
 		dom: 'Bfrtip',
 		ajax: '/admin/php/table.projects.php',
 		columns: [
@@ -55,7 +63,8 @@ $(document).ready(function() {
 		buttons: [
 			{ extend: 'create', editor: editor },
 			{ extend: 'edit',   editor: editor },
-			{ extend: 'remove', editor: editor }
+			{ extend: 'remove', editor: editor },
+			'excel'
 		]
 	} );
 } )

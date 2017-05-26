@@ -45,8 +45,16 @@ $(document).ready(function() {
 			}
 		]
 	} );
+	
+	$.fn.dataTable.ext.errMode = 'none';
 
-	var table = $('#db_connectors').DataTable( {
+	var table = $('#db_connectors')
+		.on('error.dt', function(e, settings, techNote, message) {
+			var msg = message.split('-')[1];
+			errorMSG(msg);
+			setPage(msg);
+		})
+		.DataTable( {
 		dom: 'Bfrtip',
 		ajax: '/admin/php/table.db_connectors.php',
 		columns: [
@@ -78,7 +86,8 @@ $(document).ready(function() {
 		buttons: [
 			{ extend: 'create', editor: editor },
 			{ extend: 'edit',   editor: editor },
-			{ extend: 'remove', editor: editor }
+			{ extend: 'remove', editor: editor },
+			'excel'
 		]
 	} );
 } );

@@ -13,6 +13,11 @@ $(document).ready(function() {
 		'type' : 'GET'
 	}	
 	).success(function(json) {
+		if(json.error) {
+			errorMSG(json.error);
+			setPage(json.error);	
+			return false;
+		}
 	var editor = new $.fn.dataTable.Editor( {
 		ajax: '/admin/php/table.workbooks.php',
 		table: '#workbooks',
@@ -29,8 +34,16 @@ $(document).ready(function() {
 			}
 		]
 	} );
+	
+	$.fn.dataTable.ext.errMode = 'none';
 
-	var table = $('#workbooks').DataTable( {
+	var table = $('#workbooks')
+		.on('error.dt', function(e, settings, techNote, message) {
+			var msg = message.split('-')[1];
+			errorMSG(msg);
+			setPage(msg);
+		})
+		.DataTable( {
 		dom: 'Bfrtip',
 		ajax: '/admin/php/table.workbooks.php',
 		columns: [
@@ -53,7 +66,8 @@ $(document).ready(function() {
 		buttons: [
 			{ extend: 'create', editor: editor },
 			{ extend: 'edit',   editor: editor },
-			{ extend: 'remove', editor: editor }
+			{ extend: 'remove', editor: editor },
+			'excel'
 		]
 	} ) });
 } );
@@ -61,6 +75,6 @@ $(document).ready(function() {
 }(jQuery));
 
 function editWorkBook(row) {
-	alert(row);
+	loadPage("admin/worksheets.html", { 'id': row.replace('row_', '') });
 }
 

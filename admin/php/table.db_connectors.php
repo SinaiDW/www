@@ -1,4 +1,6 @@
 <?php
+include_once("../../db/db.php");
+checkSiteAdmin();
 
 /*
  * Editor server script for DB table db_connectors
@@ -7,7 +9,6 @@
 
 // DataTables PHP library and database connection
 include( "lib/DataTables.php" );
-include_once( "../../db/db.php");
 
 // Alias Editor classes so they are easy to use
 use

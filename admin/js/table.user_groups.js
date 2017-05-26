@@ -29,7 +29,12 @@ $(document).ready(function() {
 			}
 		]
 	} );
-	var table = $('#user_groups').DataTable( {
+	$.fn.dataTable.ext.errMode = 'none';
+	var table = $('#user_groups')
+		.on('error.dt', function(e, settings, techNote, message){
+			alert(e + settings + techNote + message);
+		})
+		.DataTable( {
 		dom: 'Bfrtip',
 		ajax: '/admin/php/table.user_groups.php',
 		columns: [
@@ -45,7 +50,8 @@ $(document).ready(function() {
 		buttons: [
 			{ extend: 'create', editor: editor },
 			{ extend: 'edit',   editor: editor },
-			{ extend: 'remove', editor: editor }
+			{ extend: 'remove', editor: editor },
+			'excel'
 		]
 	} ) });
 });	

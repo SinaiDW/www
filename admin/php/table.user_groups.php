@@ -1,5 +1,8 @@
 <?php
 
+include_once("../../db/db.php");
+checkSiteAdmin();
+
 /*
  * Editor server script for DB table projects
  * Created by http://editor.datatables.net/generator
