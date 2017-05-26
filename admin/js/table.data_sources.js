@@ -12,6 +12,11 @@ $(document).ready(function() {
 		'dataType' :'json',
 		'type' : 'GET'
 	}).success(function(json) {
+		if(json.error) {
+			errorMSG(json.error);
+			setPage(json.error);
+			return false;
+		}
 		var editor = new $.fn.dataTable.Editor( {
 		ajax: 'admin/php/table.data_sources.php',
 		table: '#data_sources',
@@ -49,8 +54,16 @@ $(document).ready(function() {
 			}
 		]
 	} );
-	
-	var table = $('#data_sources').DataTable( {
+
+	$.fn.dataTable.ext.errMode = 'none';	
+
+	var table = $('#data_sources')
+		.on('error.dt', function(e, settings, techNote, message) {
+			var msg = message.split('-')[1];
+			errorMSG(msg);
+			setPage(msg);
+		})
+		.DataTable( {
 		dom: 'Bfrtip',
 		ajax: 'admin/php/table.data_sources.php',
 		columns: [
@@ -79,7 +92,8 @@ $(document).ready(function() {
 		buttons: [
 			{ extend: 'create', editor: editor },
 			{ extend: 'edit',   editor: editor },
-			{ extend: 'remove', editor: editor }
+			{ extend: 'remove', editor: editor },
+			'excel'
 		]
 	} );
 	});

@@ -207,6 +207,18 @@ function loadPage($page) {
 	echo "<script> $(document).ready(function() {loadPage('" . $page . "'); }); </script>";
 }
 
+function checkSiteAdmin() {
+	if(hasValidSession()) {
+		if(! isMemberOf($_COOKIE['siteId'], getCurrentUserId(), 'Admin')){
+			echo errorMSG("No access.  You need to contact the Admin for this site.", [ "data" => [] ]);
+			die();
+		} 
+	} else {
+		echo errorMSG("No valid session", [ "data" => [] ]);
+		die();
+	}
+}
+
 function hasValidSession() {
 	if(isset($_COOKIE) && isset($_COOKIE['sessionKey'])) {
 		$result = getSession([ 
@@ -222,8 +234,12 @@ function jsonError($error) {
 	echo json_encode([ "result" => "error", "error" => $error]);
 }
 
-function errorMSG($msg) {
-	echo json_encode([ "result" => "error", "error" => $msg ]);
+function errorMSG($msg, $data) {
+	$r = [ "result" => "error", "error" => $msg ];
+	if(isset($data)) {
+		array_merge($r, $data);
+	}
+	echo json_encode($r);
 }
 
 function getCurrentUserId() {

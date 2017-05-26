@@ -6,6 +6,10 @@
  */
 
 // DataTables PHP library and database connection
+
+include_once("../../db/db.php");
+checkSiteAdmin();
+
 include( "lib/DataTables.php" );
 
 // Alias Editor classes so they are easy to use

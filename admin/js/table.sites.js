@@ -17,8 +17,19 @@ $(document).ready(function() {
 			}
 		]
 	} );
+	
+	$.fn.dataTable.ext.errMode = 'none';
 
-	var table = $('#sites').DataTable( {
+	var table = $('#sites')
+		.on('error.dt', function(e, settings, techNote, message) {
+			var msg = message.split('-')[1];
+			errorMSG(msg);
+			setPage(msg);
+		})
+		.DataTable( {
+		buttons: [
+			'excel'
+		],
 		dom: 'Bfrtip',
 		ajax: '/admin/php/table.sites.php',
 		columns: [
@@ -31,7 +42,8 @@ $(document).ready(function() {
 		buttons: [
 			{ extend: 'create', editor: editor },
 			{ extend: 'edit',   editor: editor },
-			{ extend: 'remove', editor: editor }
+			{ extend: 'remove', editor: editor },
+			'excel'
 		]
 	} );
 } );

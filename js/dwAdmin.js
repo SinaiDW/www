@@ -1,3 +1,6 @@
+var pageData = {},
+	currentPage;
+
 function parseJSONToOptions(json, field) {
 	var out = [];
 	var parts = field.split('.');
@@ -103,21 +106,74 @@ function convertLinks(){
 	});
 }
 
-function loadPage(href, data) {
+function setPage(html, data) {
+	$('#main').html(html);
+	$('#main').css('display', 'block');
+	convertLinks();
+	pageLoaded(data || {});
+}
+
+function createCellPos( n ){
+    var ordA = 'A'.charCodeAt(0);
+    var ordZ = 'Z'.charCodeAt(0);
+    var len = ordZ - ordA + 1;
+    var s = "";
+ 
+    while( n >= 0 ) {
+        s = String.fromCharCode(n % len + ordA) + s;
+        n = Math.floor(n / len) - 1;
+    }
+ 
+    return s;
+}
+
+function  excelButton() {
+	 return {
+            extend: 'excelHtml5',
+            text: '<i class="fa fa-excel"></i> Excel',
+            customize: function( xlsx ) {
+                var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                var lastCol = sheet.getElementsByTagName('col').length - 1;
+                var colRange = createCellPos( lastCol ) + '1';
+                //Has to be done this way to avoid creation of unwanted namespace atributes.
+                var afSerializer = new XMLSerializer();
+                var xmlString = afSerializer.serializeToString(sheet);
+                var parser = new DOMParser();
+                var xmlDoc = parser.parseFromString(xmlString,'text/xml');
+                var xlsxFilter = xmlDoc.createElementNS('http://schemas.openxmlformats.org/spreadsheetml/2006/main','autoFilter');
+                var filterAttr = xmlDoc.createAttribute('ref');
+                filterAttr.value = 'A1:' + colRange;
+                xlsxFilter.setAttributeNode(filterAttr);
+                sheet.getElementsByTagName('worksheet')[0].appendChild(xlsxFilter);
+            }
+        }
+}
+
+function loadPage(href, data, options) {
 	$('#main').css('display', 'block');
 	$('#main').css('display', 'none');
+	if(options && options.requireSession && ! getCookie('sessionKey')) {
+		errorMSG("No valid session");
+		loadPage('login.html');
+		return false;
+	}
 	$.ajax({
 		'url': href.replace('#&', ''),
 		'type': 'GET',
 		'cache' : false,
 		'success' : function(html){
 //			alert(html);
-			$('#main').html(html);
-			$('#main').css('display', 'block');
-			convertLinks();
-			pageLoaded(data || {});
+			if(data) {
+				currentPage = href;
+				pageData[href] = data;
+			}
+			setPage(html, data);
 		}
 	});
+}
+
+function getCurrentPageData() {
+	return pageData[currentPage];
 }
 
 function nameSite(name) {
@@ -328,4 +384,9 @@ function getCookie(c_name) {
             return unescape(y);
         }
     }
+}
+
+$.urlParam = function(name) {
+  var results = new RegExp('[\?&amp;]' + name + '=([^&amp;#]*)').exec(window.location.href);
+  return results[1] || 0;
 }

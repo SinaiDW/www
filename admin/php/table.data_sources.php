@@ -1,5 +1,9 @@
 <?php
 
+include_once("../../db/db.php");
+checkSiteAdmin();
+
+
 /*
  * Editor server script for DB table data_sources
  * Created by http://editor.datatables.net/generator
