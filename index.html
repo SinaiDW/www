@@ -5,30 +5,42 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
+<script
+  src="https://code.jquery.com/jquery-1.12.4.min.js"
+  integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+  crossorigin="anonymous"></script>
+  
 <script type="text/javascript" charset="utf-8" src="/DataTables/datatables.min.js"></script>  
+ <link rel="stylesheet" href="/DataTables/datatables.min.css"> 
 
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> 
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"> 
+
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <script src="js/index.js"></script>
 
-<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 
-<link rel="stylesheet" type="text/css" href="/DataTables/datatables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css">
+
+<!-- 
+<link rel="stylesheet" type="text/css" href="jsgrid-1.5.3/dist/jsgrid.min.css">
+<link rel="stylesheet" type="text/css" href="jsgrid-1.5.3/dist/jsgrid-theme.min.css">
+<script src="jsgrid-1.5.3/dist/jsgrid.min.js"></script> -->
+
 <link rel="stylesheet" type="text/css" href="/css/generator-base.css">
 <link rel="stylesheet" type="text/css" href="/css/editor.dataTables.min.css">
-<script type="text/javascript" charset="utf-8" src="/js/dataTables.editor.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/dataTables.editor.min.js"></script> 
 <script type="text/javascript" charset="utf-8" src="/js/dwAdmin.js"></script>
-<link rel="stylesheet" type="text/css" href="/css/dw.css">
+<link rel="stylesheet" type="text/css" href="/css/dw.css"> 
 
 <style>
 .jumbotron {
@@ -37,8 +49,16 @@
 	padding-top:10px;
 	text-size: 16pt;
 	background-color: #00aeef;
+	color: #e0e0e0;
+}
+
+.jumbotron span {
 	color: white;
 }
+
+th { font-size: 10px; }
+td { font-size: 10px; }
+
 
   
 </style>
@@ -83,7 +103,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
 				<li><a href="#" onclick="showProjects()"><i class="fa fa-home" title="Home"></i> Home</a></li>
-				<li><a href="#" onclick="loadPage('mySites.php')"><i class="fa fa-sitemap" title="Sites"></i> Sites</a></li>
+				<li><a href="#" onclick="loadPage('mySites.php')" title="Click to select site"><i class="fa fa-sitemap" title="Sites"></i> Sites</a></li>
 				<li><a href="#" onclick="loadPage('admin/index.html', null, { requireSession: true })"><i class="fa fa-gear" title="Admin"></i> Admin</a></li>
                 <li><a id="loginLink" href="#" onclick="login()">log in</a></li>
             </ul>
@@ -92,7 +112,8 @@
 </nav>
 
 <div class="jumbotron">Reporting server: v. 0.1 <i class="fa fa-copyright"></i> 2017:  
-<span class="clickable" onclick="loadPage('showProjects.php')"><i class="fa fa-th-list"></i> <span id="spanNameId"></span></span></div>
+<span class="clickable" onclick="loadPage('showProjects.php')" title="Current site.  Click to see projects">
+<i class="fa fa-th-list"></i> <span id="spanNameId"></span></span></div>
 
 <div class="container-fluid" id="main">
 </div>

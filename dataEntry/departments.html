@@ -1,0 +1,110 @@
+<script>
+
+
+function checkAddOption() {
+	if($('#propertyName').val() == '**add**') {
+		var add = prompt("Please add a property")
+		if(add) {
+			$('#propertyName').append('<option>' + add + '</option>');
+			$('#propertyName').val(add);
+		} else {
+			return false;
+		}
+	} 
+	showDepts($('#propertyName').val());
+}
+
+var table;
+
+
+function showDepts(name) {
+	$.ajax({
+		'url' : 'db/getDeptWithProperty.php',
+		'data' : { 'name' : name },
+		'type' : 'GET',
+		'dataType' : 'JSON',		
+	}).success(function(json) {	
+		//var d = JSON.parse(JSON.stringify(json.data));
+		d = json.data;
+		d.id = '999';
+		if(table) table.destroy();
+		table = addDataTable(d); 		
+	});
+} 
+
+function getPropertyNames() {
+	$.ajax({
+		'url': 'db/getDeptPropertyNames.php',
+		'type' : 'GET',
+		'dataType': 'JSON'
+	}).success(function(json) {
+		if(json['result'] == 'OK') {
+			$('#propertyName').children().remove();
+			for(var i=0; i<json.data.data.length; i++) {
+				$('#propertyName').append("<option>" + json.data.data[i][0] + "</option>");
+			}
+			$('#propertyName').append('<option value="**add**">Add new option</option>');
+			showDepts($('#propertyName').val());
+		} else {
+			errorMSG(json.error);
+		}
+	});
+}
+
+function updateVals() {
+	var d = getInputValues('deptProp');
+	$.ajax({
+		'url' : 'db/addDeptProperties.php',
+		'type' : 'POST', 
+		'data' : d,
+		'dataType' : 'JSON'
+	}).success(function(json) {
+		if(json.result == 'OK') {
+			message(json.message);
+			showDepts(d.name);
+		} else {
+			errorMSG(json.error);
+		}
+	}) ;
+}
+
+function deleteVals() {
+	if(confirm("Are you sure you want to remove the values for these departments?")) {
+		var d = getInputValues('deptProp');
+		$.ajax({
+			'url' : 'db/deleteDeptProperties.php',
+			'type' : 'POST', 
+			'data' : d,
+			'dataType' : 'JSON'
+		}).success(function(json) {
+			if(json.result == 'OK') {
+				message(json.message);
+				showDepts(d.name);
+			} else {
+				errorMSG(json.error);
+			}
+		}) ;
+	}
+}
+
+$(document).ready(function() {
+	getPropertyNames();
+}); 
+
+</script>
+
+<div class="col-xs-12">
+	<p>Property name: <select id="propertyName" name="name" onchange="checkAddOption()" model="deptProp"></select></p>
+	<div style="border: 1px solid #f0f0f0; width: 100%">
+		Value: <input type="text" name="val" model="deptProp"> <button onclick="updateVals()">Add</button>
+			<button onclick="deleteVals()">Delete</button>
+		<br>
+		<textarea cols="80" rows="5" name="depts" model="deptProp" placeholder="SC Dept Codes"></textarea>
+	</div>
+	
+	<div class="DataTables">
+	<table id="projects999" class="table table-striped table-bordered" cellspacing="0" width="100%">
+		
+	</table>
+	</div>
+</div>

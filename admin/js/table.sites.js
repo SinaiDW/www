@@ -14,6 +14,12 @@ $(document).ready(function() {
 			{
 				"label": "name:",
 				"name": "name"
+			},
+			{
+				"label": "Access:",
+				"name": "access",
+				"type": "select",
+				"options": ['Private', 'Public']
 			}
 		]
 	} );
@@ -35,6 +41,9 @@ $(document).ready(function() {
 		columns: [
 			{
 				"data": "name"
+			},
+			{
+				"data": "access"
 			}
 		],
 		select: true,

@@ -1,0 +1,45 @@
+<html>
+	<header>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="jsgrid-1.5.3/dist/jsgrid.min.css">
+		<link rel="stylesheet" type="text/css" href="jsgrid-1.5.3/dist/jsgrid-theme.min.css">
+		<script src="jsgrid-1.5.3/dist/jsgrid.min.js"></script>
+		
+<script>
+
+$(function() {
+ 
+    $("#jsGrid").jsGrid({
+        height: "90%",
+        width: "100%",
+ 
+        sorting: true,
+        paging: true,
+ 
+        data: { db: [{ "Name" : "Harry", "Age": 60, "Address": "1 road", "Country": "US", "Married" : true }] },
+ 
+        fields: [
+            { name: "Name", type: "text", width: 150 },
+            { name: "Age", type: "number", width: 50 },
+            { name: "Address", type: "text", width: 200 },
+            { name: "Country", type: "text", width: 100 },
+            { name: "Married", type: "checkbox", title: "Is Married" }
+        ]
+    });
+});
+ 
+
+		
+</script>
+	
+	</header>
+	
+	<body>
+	
+		<div id="results">
+			
+		</div>
+	
+	</body>
+
+</html>

@@ -29,7 +29,7 @@ $(document).ready(function() {
 				"label": "Type:",
 				"name": "data_sources.type",
 				"type": "select",
-				"options" : ['Query']
+				"options" : ['Query', 'Tableau']
 			},		
 			{
 				"label": "db_connector_id:",
@@ -38,7 +38,7 @@ $(document).ready(function() {
 				"options": parseJSONToOptions(json, 'name')				
 			},
 			{
-				"label": "sql:",
+				"label": "sql/code:",
 				"name": "data_sources.sql",
 				"type": "textarea"
 			},

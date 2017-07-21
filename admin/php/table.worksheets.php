@@ -34,13 +34,15 @@ $db->sql( "CREATE TABLE IF NOT EXISTS `worksheets` (
 );" );
 
 // Build our Editor instance and process the data coming from _POST
-Editor::inst( $db, 'worksheets', 'id' )
+Editor::inst( $db, 'worksheets', 'worksheets.id' )
 	->fields(
-		Field::inst( 'name' ),
-		Field::inst( 'data_source_id' ),
-		Field::inst( 'workbook_id' ),
-		Field::inst( 'options' )
+		Field::inst( 'worksheets.name' ),
+		Field::inst( 'data_sources.name' ),
+		Field::inst( 'worksheets.workbook_id' ),
+		Field::inst( 'worksheets.data_source_id' ),
+		Field::inst( 'worksheets.options' )
 	)
-	->where('workbook_id', $_GET['id'])
+	->leftJoin('data_sources', 'data_sources.id', '=', 'worksheets.data_source_id')
+	->where('worksheets.workbook_id', $_GET['id'])
 	->process( $_POST )
 	->json();
