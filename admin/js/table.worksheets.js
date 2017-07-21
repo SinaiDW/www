@@ -7,6 +7,29 @@
 (function($){
 
 $(document).ready(function() {
+	$.ajax({
+		'url' : 'admin/php/getWorkbook.php',
+		'data' : { 'id' : getCurrentPageData()['id']  },
+		'type' : 'GET',
+		'dataType' : 'JSON'
+	}).success(function(json) {
+		if(json.result == 'OK') {
+			$('#workbookName').text(json.data.name);
+		} else {
+			errorMSG(JSON.error);
+		}
+	});
+	
+	$.ajax({
+		'url' : 'admin/php/table.data_sources.php',
+		'type' : 'GET',
+		'dataType' : 'JSON'		
+	}).success(function(json) {
+		if(json.result == 'error'){
+			errorMSG(json.error);
+			setPage(json.error);
+			return false;
+		}
 	var editor = new $.fn.dataTable.Editor( {
 		ajax: { "url" : 'admin/php/table.worksheets.php',
 				"data" : { 'id' : getCurrentPageData()['id'] }
@@ -14,21 +37,29 @@ $(document).ready(function() {
 		table: '#worksheets',
 		fields: [
 			{
-				"label": "name:",
-				"name": "name"
+				"label": "Name:",
+				"name": "worksheets.name"
 			},
 			{
-				"label": "data_source_id:",
-				"name": "data_source_id"
+				"label": "Data source:",
+				"name": "worksheets.data_source_id",
+				"type" : "select",
+				"options" : parseJSONToOptions(json, 'data_sources.name')
 			},
 			{
 				"label": "workbook_id:",
-				"name": "workbook_id"
+				"name": "worksheets.workbook_id",
+				"type": "hidden",
+				"default" : getCurrentPageData()['id'] 
 			},
 			{
-				"label": "options:",
-				"name": "options",
+				"label": "Options:",
+				"name": "worksheets.options",
 				"type": "textarea"
+			},
+			{ 	'name' : 'id',
+				'type' : 'hidden',
+				'default' : getCurrentPageData()['id'] 
 			}
 		]
 	} );
@@ -40,16 +71,13 @@ $(document).ready(function() {
 		},
 		columns: [
 			{
-				"data": "name"
+				"data": "worksheets.name"
 			},
 			{
-				"data": "data_source_id"
+				"data": "data_sources.name"
 			},
 			{
-				"data": "workbook_id"
-			},
-			{
-				"data": "options"
+				"data": "worksheets.options"
 			}
 		],
 		select: true,
@@ -57,9 +85,10 @@ $(document).ready(function() {
 		buttons: [
 			{ extend: 'create', editor: editor },
 			{ extend: 'edit',   editor: editor },
-			{ extend: 'remove', editor: editor }
+			{ extend: 'remove', editor: editor },
+			'excel'
 		]
-	} );
+	} ); });
 } );
 
 }(jQuery));

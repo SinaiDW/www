@@ -37,7 +37,8 @@ use
 // Build our Editor instance and process the data coming from _POST
 Editor::inst( $db, 'sites', 'id' )
 	->fields(
-		Field::inst( 'name' )
+		Field::inst( 'name' ),
+		Field::inst( 'access' )
 	)
 	->process( $_POST )
 	->json();

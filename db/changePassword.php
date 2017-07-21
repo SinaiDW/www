@@ -35,7 +35,7 @@ if(! is_null($user)) {
 		echo json_encode([ "result" => "OK", "message" => "Password updated."]);
 	} else {
 		sql([
-			"query" => "update local_auth set username = :username, password = :password, change_password = :change_password where user_id = :user_id)",
+			"query" => "update local_auth set username = :username, password = :password, change_password = :change_password, last_reset = now() where user_id = :user_id",
 			"params" => [[
 					"name" => "username",
 					"val" => $_POST['username'],

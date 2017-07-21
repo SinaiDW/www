@@ -242,12 +242,15 @@ function login() {
 function loginSubmit() {
 	var data = getInputValues('login');
 	if(! data.network) {
+		errorMSG("Network is required");
 		return false;
 	}
 	if(!data.password) {
+		errorMSG("Password is required");
 		return false;
 	}	
 	if(!data.username) {
+		errorMSG("Username is required");
 		return false;
 	}
 	$.ajax({
@@ -294,6 +297,10 @@ function loginSubmit() {
 
 function getWorkbooks(name, id) {
 	loadPage('showWorkbooks.php?name='+name+'&id='+id);
+}
+
+function showWorksheets(name, id) {
+	loadPage('showWorksheets.php?name='+name+'&id='+id);
 }
 
 
@@ -389,4 +396,25 @@ function getCookie(c_name) {
 $.urlParam = function(name) {
   var results = new RegExp('[\?&amp;]' + name + '=([^&amp;#]*)').exec(window.location.href);
   return results[1] || 0;
+}
+
+
+function addDataTable(json) {
+	return $('#projects' + json['id']).DataTable({
+		dom: 'Bfrtip',
+		data: json.data,
+		columns: json.columns,
+		'buttons' : [ 'excel' ]
+	}); 
+}
+
+function addDataTableFromID(id) {
+	$.ajax({
+		'url' : '/db/getData.php',
+		'data' : { 'id' : id },
+		'dataType' : 'json',
+		'type' : 'GET'
+	}).success(function(json) {
+		addDataTable(json.data);
+	});
 }

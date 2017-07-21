@@ -51,16 +51,19 @@ $pwd = getLocalAuth([ 'user_id' => $_GET['id']]);
 <script>
 
 function changePassword() {
-	var data = getInputValues('reset');;
-	alert(JSON.stringify(data));
-	$.ajax({
-		'url' : 'db/changePassword.php',
-		'data' : data,
-		'type' : 'POST',
-		'dataType' : 'json'
-	}).success(function(json) {
-		
-	});
+	var data = getInputValues('reset');
+	if($('#passwordInput').val() == $('#passwordInput2').val()) {
+		$.ajax({
+			'url' : 'db/changePassword.php',
+			'data' : data,
+			'type' : 'POST',
+			'dataType' : 'json'
+		}).success(function(json) {
+			message(json.message);
+		});
+	} else {
+		errorMSG("Passwords do not match");
+	}
 }
 
 </script>
